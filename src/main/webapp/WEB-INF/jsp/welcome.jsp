@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
     <title>welcome</title>
@@ -7,21 +8,42 @@
     <h2>welcome to the car rentals portal ! ${userId} </h2>
 
   <table border="1" method="post">
-          <tr style="font-size: 13">
+          <tr style="font-size:21">
               <td>car model</td>
               <td>5 seater or 7 seater</td>
-              <td>car price</td>
-              <td>Rental id</td>
+              <td>Rent price</td>
+              <td>Rental_id</td>
+
           </tr>
           <c:forEach var="impl" items="${carService}">
-              <tr style="font-size: 10">
-                  <td><input type="text" id="car_model" value=${impl.getCarModel()} ></td>
-                  <td><input type="text" id="car_number" value=${impl.getCarNumber()} ></td>
-                  <td><input type="text" id="rent_price" value=${impl.getRentPrice()} ></td>
-                  <td><input type="text" id="rent_id" value=${impl.getRentalId()} ></td>
+              <tr style="font-size: 17">
+                  <td>${impl.carModel} </td>
+                  <td>${impl.carNumber} </td>
+                  <td>${impl.rentPrice} </td>
+                  <td>${impl.rentalId} </td>
 
               </tr>
               </c:forEach>
       </table>
+      <h3>Please enter the below details of the car that you want to book</h3>
+      <form>
+
+              Start-time:<input type="datetime-local" name="start-time" class="form-control mt-3"
+                          placeholder="start time"/><br>
+                          <br>
+              End-Time:<input type="datetime-local" name="end-time" class="form-control mt-3"
+                          placeholder="end time"/><br>
+                          <br>
+              <input type="number" name="seater" class="form-control mt-3"
+                                      placeholder="seater 5 or 7"/><br>
+                          <br>
+             <input type="text" name="model" class="form-control mt-3"
+                                                  placeholder="model"/><br>
+                           <br>
+              <input type="text" name="rentalId" class="form-control mt-3"
+              placeholder="Rental Id"/>
+
+              <button class="btn btn-dark btn-block mt-3">BOOK</button>
+          </form>
 </body>
 </html>

@@ -30,20 +30,20 @@ public class LoginController {
 
         if(user.getPassword().equals(password)){
             model.put("userId",userId);
-            return "welcome";
+            return "redirect:welcome";
         }
         model.put("errorMsg","userId or password is incorrect");
         return "login";
     }
 
-    @RequestMapping(value="/welcome",method=RequestMethod.POST)
+    @RequestMapping(value="/welcome",method=RequestMethod.GET)
     public ModelAndView carPage(String model){
         ModelAndView model1 = new ModelAndView();
 
-        List<Car> use = userService.getCars(model);
-
+        List<Car> use = userService.getCars();
+         Car c=new Car();
+        use.add(c);
         model1.addObject("carService",use);
-        model1.addObject("welcome");
         return model1;
     }
 

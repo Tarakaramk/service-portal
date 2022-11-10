@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    List<Car> clst = new ArrayList<Car>();
     @Autowired
     UserDao userDao;
 
@@ -23,8 +22,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
     @Override
-    public List<Car> getCars(String model){
-     List<Car> car = userDao.getCars(model);
+    public List<Car> getCars(){
+     List<Car> car = userDao.getCars();
      return  car;
     }
 

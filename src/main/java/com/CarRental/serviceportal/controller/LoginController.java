@@ -47,4 +47,11 @@ public class LoginController {
         return model1;
     }
 
+    @RequestMapping(value="/welcome",method=RequestMethod.POST)
+    public String bookPage(ModelMap model,@RequestParam int rental ){
+        userService.getStatus(rental);
+        model.put("rental",rental);
+        return "book";
+    }
+
 }

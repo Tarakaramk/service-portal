@@ -7,7 +7,7 @@
 <body>
     <h2>welcome to the car rentals portal ! ${userId} </h2>
 
-  <table border="1" method="post">
+  <table border="1">
           <tr style="font-size:21">
               <td>car model</td>
               <td>5 seater or 7 seater</td>
@@ -26,7 +26,7 @@
               </c:forEach>
       </table>
       <h3>Please enter the below details of the car that you want to book</h3>
-      <form>
+      <form  method="post">
 
               Start-time:<input type="datetime-local" name="start-time" class="form-control mt-3"
                           placeholder="start time"/><br>
@@ -40,7 +40,7 @@
              <input type="text" name="model" class="form-control mt-3"
                                                   placeholder="model"/><br>
                            <br>
-              <input type="text" name="rentalId" class="form-control mt-3"
+              <input type="number" name="rental" class="form-control mt-3"
               placeholder="Rental Id"/>
 
               <button class="btn btn-dark btn-block mt-3">BOOK</button>

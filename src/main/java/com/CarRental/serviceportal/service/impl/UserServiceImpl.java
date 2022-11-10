@@ -26,5 +26,9 @@ public class UserServiceImpl implements UserService {
      List<Car> car = userDao.getCars();
      return  car;
     }
+    @Override
+    public void getStatus(int rental){
+      userDao.getStatus(rental);
+    }
 
 }

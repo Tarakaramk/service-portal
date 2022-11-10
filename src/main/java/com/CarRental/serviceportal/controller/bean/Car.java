@@ -6,6 +6,15 @@ public class Car {
     int rentPrice;
     int rentalId;
 
+    int rental;
+
+    public int getRental() {
+        return rental;
+    }
+
+    public void setRental(int rental) {
+        this.rental = rental;
+    }
 
     public int getCarNumber() {
         return carNumber;

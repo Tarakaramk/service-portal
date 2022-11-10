@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
     JdbcTemplate jdbcTemplate;
 
     @PostConstruct
@@ -48,7 +50,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
     @Override
     public List<Car> getCars() {
-        String sql = "select *from car";
+        String sql = "select *from car where car_status=1";
         List<Car> lst = new ArrayList<>();
         lst = getJdbcTemplate().query(sql, new Object[]{}, new ResultSetExtractor<List<Car>>() {
             @Override
@@ -67,5 +69,12 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         });
         System.out.println(lst);
         return lst;
+    }
+
+    @Transactional
+    public void getStatus(int rental){
+        String sql ="update car set car_status=0 where rental_id=?";
+        System.out.print(sql);
+        jdbcTemplate.update(sql,rental);
     }
 }

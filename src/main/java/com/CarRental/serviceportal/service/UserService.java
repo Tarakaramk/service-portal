@@ -9,4 +9,6 @@ public interface UserService {
     User getUserByUserId(String userId);
     List<Car> getCars();
 
+    void getStatus(int rental);
+
 }

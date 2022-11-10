@@ -8,5 +8,6 @@ import java.util.List;
 public interface UserDao {
     User getUserById(String userId);
     List<Car> getCars();
+    void getStatus(int rental);
 
 }

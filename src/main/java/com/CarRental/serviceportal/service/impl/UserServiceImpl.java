@@ -1,6 +1,7 @@
 package com.CarRental.serviceportal.service.impl;
 
 import com.CarRental.serviceportal.controller.bean.Car;
+import com.CarRental.serviceportal.controller.bean.Rental;
 import com.CarRental.serviceportal.controller.bean.User;
 import com.CarRental.serviceportal.dao.UserDao;
 import com.CarRental.serviceportal.service.UserService;
@@ -27,8 +28,14 @@ public class UserServiceImpl implements UserService {
      return  car;
     }
     @Override
-    public void getStatus(int rental){
-      userDao.getStatus(rental);
+    public List<Car> getStatus(int rental,String start_time,String end_time,int seater,String car_model){
+      //userDao.getStatus(rental);
+        List<Car> car = userDao.getStatus(rental,start_time,end_time,seater,car_model);
+        return  car;
+    }
+    public List<Rental> getToken(int rToken){
+        List<Rental> rental = userDao.getToken(rToken);
+        return rental;
     }
 
 }

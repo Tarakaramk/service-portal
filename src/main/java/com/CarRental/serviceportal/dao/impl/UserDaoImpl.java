@@ -1,6 +1,7 @@
 package com.CarRental.serviceportal.dao.impl;
 
 import com.CarRental.serviceportal.controller.bean.Car;
+import com.CarRental.serviceportal.controller.bean.Rental;
 import com.CarRental.serviceportal.controller.bean.User;
 import com.CarRental.serviceportal.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,8 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         });
     }
 
+
+
     @Override
     public List<Car> getCars() {
         String sql = "select *from car where car_status=1";
@@ -67,14 +70,68 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
                 return lst;
             }
         });
-        System.out.println(lst);
+        //System.out.println(lst);
         return lst;
     }
 
+
+
+
     @Transactional
-    public void getStatus(int rental){
+    public List<Car> getStatus(int rental,String start_time,String end_time,int seater,String car_model){
         String sql ="update car set car_status=0 where rental_id=?";
-        System.out.print(sql);
         jdbcTemplate.update(sql,rental);
+
+
+        String sql1 = "select *from car where rental_id=?";
+        List<Car> stat = new ArrayList<>();
+
+
+        String sql2="insert into rentals(rental_id,sdate,edate,model,seater)  values (?,?,?,?,?)";
+        jdbcTemplate.update(sql2,new Object[]{rental,start_time,end_time,car_model,seater});
+
+
+        stat = getJdbcTemplate().query(sql1, new Object[]{rental}, new ResultSetExtractor<List<Car>>() {
+            @Override
+            public List<Car> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                List<Car> stat = new ArrayList<>();
+                while (rs.next()) {
+                    Car cr = new Car();
+                    cr.setCarModel(rs.getString("car_model"));
+                    cr.setCarNumber(rs.getInt("car_number"));
+                    cr.setRentPrice(rs.getInt("rent_price"));
+                    cr.setRentalId(rs.getInt("rental_id"));
+                    stat.add(cr);
+                }
+                return stat;
+            }
+        });
+        //System.out.println(lst);
+        return stat;
+    }
+
+    public List<Rental> getToken(int rToken){
+        String sql = "select *from rentals where rental_id=?";
+        List<Rental> token = new ArrayList<>();
+        token = getJdbcTemplate().query(sql, new Object[]{rToken}, new ResultSetExtractor<List<Rental>>() {
+            @Override
+            public List<Rental> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                List<Rental> token = new ArrayList<>();
+                while (rs.next()) {
+                    Rental ren = new Rental();
+                    ren.setRentalIde(rs.getInt("rental_id"));
+                    ren.setsDate(rs.getString("sdate"));
+                    ren.seteDate(rs.getString("edate"));
+                    ren.setrModel(rs.getString("model"));
+                    ren.setRentalSeater(rs.getInt("seater"));
+                    token.add(ren);
+                }
+                return token;
+            }
+        });
+        return token;
+
+
+
     }
 }

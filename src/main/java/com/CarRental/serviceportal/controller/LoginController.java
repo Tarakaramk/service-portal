@@ -1,6 +1,7 @@
 package com.CarRental.serviceportal.controller;
 
 import com.CarRental.serviceportal.controller.bean.Car;
+import com.CarRental.serviceportal.controller.bean.Rental;
 import com.CarRental.serviceportal.controller.bean.User;
 import com.CarRental.serviceportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,37 @@ public class LoginController {
         return model1;
     }
 
-    @RequestMapping(value="/welcome",method=RequestMethod.POST)
-    public String bookPage(ModelMap model,@RequestParam int rental ){
-        userService.getStatus(rental);
-        model.put("rental",rental);
-        return "book";
+
+
+    @RequestMapping(value="/book",method=RequestMethod.POST)
+    public ModelAndView bookPage(String model,@RequestParam int rental,@RequestParam String start_time,@RequestParam String end_time,
+                                 @RequestParam int seater,@RequestParam String car_model ){
+        //model.put("rental",rental);
+        ModelAndView mode = new ModelAndView();
+
+        List<Car> use = userService.getStatus(rental,start_time,end_time,seater,car_model);
+        Car c=new Car();
+        use.add(c);
+        mode.addObject("booking",use);
+        mode.setViewName("book");
+        return mode;
+    }
+
+    @RequestMapping(value="/historylogin",method = RequestMethod.GET)
+    public String historyloginPage(){
+        return "historylogin";
+    }
+
+
+    @RequestMapping(value="/historylogin",method=RequestMethod.POST)
+    public ModelAndView historyPage(String model,@RequestParam int rToken ){
+        ModelAndView mode1 = new ModelAndView();
+        List<Rental> use = userService.getToken(rToken);
+        Rental r = new Rental();
+        use.add(r);
+        mode1.addObject("historyPage",use);
+        mode1.setViewName("history");
+        return mode1;
     }
 
 }

@@ -21,23 +21,22 @@
                   <td>${impl.carNumber} </td>
                   <td>${impl.rentPrice} </td>
                   <td>${impl.rentalId} </td>
-
               </tr>
               </c:forEach>
       </table>
-      <h3>Please enter the below details of the car that you want to book</h3>
-      <form  method="post">
+      <h3>Please enter the below details of the car to book</h3>
+      <form  method="post" action="book" >
 
-              Start-time:<input type="datetime-local" name="start-time" class="form-control mt-3"
+              Start-time:<input type="datetime-local" name="start_time" class="form-control mt-3"
                           placeholder="start time"/><br>
                           <br>
-              End-Time:<input type="datetime-local" name="end-time" class="form-control mt-3"
+              End-Time:<input type="datetime-local" name="end_time" class="form-control mt-3"
                           placeholder="end time"/><br>
                           <br>
               <input type="number" name="seater" class="form-control mt-3"
                                       placeholder="seater 5 or 7"/><br>
                           <br>
-             <input type="text" name="model" class="form-control mt-3"
+             <input type="text" name="car_model" class="form-control mt-3"
                                                   placeholder="model"/><br>
                            <br>
               <input type="number" name="rental" class="form-control mt-3"

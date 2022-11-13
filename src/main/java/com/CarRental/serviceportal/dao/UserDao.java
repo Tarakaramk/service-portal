@@ -11,5 +11,6 @@ public interface UserDao {
     List<Car> getCars();
     List<Car> getStatus(int rental,String start_time,String end_time,int seater,String car_model);
     List<Rental> getToken(int rToken);
+    List<Car> getOrder();
 
 }

@@ -37,5 +37,10 @@ public class UserServiceImpl implements UserService {
         List<Rental> rental = userDao.getToken(rToken);
         return rental;
     }
+    @Override
+    public List<Car> getOrder(){
+        List<Car> car = userDao.getOrder();
+        return  car;
+    }
 
 }

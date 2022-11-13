@@ -35,6 +35,8 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         setDataSource(dataSource);
     }
 
+
+    //login page validation(checking password)
     @Override
     public User getUserById(String userId) {
         String sql = "select user_pswd from user where user_id=?";
@@ -51,6 +53,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
 
 
+    //displaying available cars to the user by getting data from database
     @Override
     public List<Car> getCars() {
         String sql = "select *from car where car_status=1";
@@ -76,7 +79,10 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
 
 
-
+   // Three type functioning happens
+    //updating available cars to the database by setting  status to 0 using sql
+    //displaying booking details using sql1
+    //inserting booking details to rentals table as history using sql2
     @Transactional
     public List<Car> getStatus(int rental,String start_time,String end_time,int seater,String car_model){
         String sql ="update car set car_status=0 where rental_id=?";
@@ -110,6 +116,8 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         return stat;
     }
 
+
+    //retrieving history details from rentals table and displaying to user
     public List<Rental> getToken(int rToken){
         String sql = "select *from rentals where rental_id=?";
         List<Rental> token = new ArrayList<>();
@@ -130,8 +138,28 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
             }
         });
         return token;
+    }
 
-
-
+    @Override
+    public List<Car> getOrder(){
+        String sql = "select *from car where car_status=1 order by rent_price";
+        List<Car> lst = new ArrayList<>();
+        lst = getJdbcTemplate().query(sql, new Object[]{}, new ResultSetExtractor<List<Car>>() {
+            @Override
+            public List<Car> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                List<Car> lst = new ArrayList<>();
+                while (rs.next()) {
+                    Car cl = new Car();
+                    cl.setCarModel(rs.getString("car_model"));
+                    cl.setCarNumber(rs.getInt("car_number"));
+                    cl.setRentPrice(rs.getInt("rent_price"));
+                    cl.setRentalId(rs.getInt("rental_id"));
+                    lst.add(cl);
+                }
+                return lst;
+            }
+        });
+        //System.out.println(lst);
+        return lst;
     }
 }

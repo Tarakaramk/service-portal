@@ -14,4 +14,6 @@ public interface UserService {
 
     List<Rental> getToken(int rToken);
 
+    List<Car> getOrder();
+
 }

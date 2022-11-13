@@ -23,7 +23,9 @@
                   <td>${impl.rentalId} </td>
               </tr>
               </c:forEach>
-      </table>
+      </table><br>
+
+      <a href="/order"> order</a>
       <h3>Please enter the below details of the car to book</h3>
       <form  method="post" action="book" >
 

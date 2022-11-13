@@ -24,6 +24,11 @@ public class LoginController {
     public String loginPage(){
         return "login";
     }
+    @RequestMapping(value="/order",method = RequestMethod.GET)
+    public String order2Page(){
+        return "order";
+    }
+
 
     @RequestMapping(value="/login",method = RequestMethod.POST)
     public String welcomePage(ModelMap model, @RequestParam String userId, @RequestParam String password){
@@ -36,6 +41,7 @@ public class LoginController {
         model.put("errorMsg","userId or password is incorrect");
         return "login";
     }
+
 
     @RequestMapping(value="/welcome",method=RequestMethod.GET)
     public ModelAndView carPage(String model){
@@ -80,5 +86,18 @@ public class LoginController {
         mode1.setViewName("history");
         return mode1;
     }
+
+    @RequestMapping(value="/oder",method=RequestMethod.GET)
+    public ModelAndView orderPage(String model){
+        ModelAndView model1 = new ModelAndView();
+
+        List<Car> use = userService.getOrder();
+        Car c=new Car();
+        use.add(c);
+        model1.addObject("Service",use);
+        model1.setViewName("order");
+        return model1;
+    }
+
 
 }

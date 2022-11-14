@@ -25,14 +25,14 @@
               </c:forEach>
       </table><br>
 
-      <a href="/order"> order</a>
+     <!-- <a  href="http://localhost:8080/sorting" >SORT BY PRICES</a>  //-->
       <h3>Please enter the below details of the car to book</h3>
       <form  method="post" action="book" >
 
-              Start-time:<input type="datetime-local" name="start_time" class="form-control mt-3"
+              Start-time:<input type="date" name="start_time" class="form-control mt-3"
                           placeholder="start time"/><br>
                           <br>
-              End-Time:<input type="datetime-local" name="end_time" class="form-control mt-3"
+              End-Time:<input type="date" name="end_time" class="form-control mt-3"
                           placeholder="end time"/><br>
                           <br>
               <input type="number" name="seater" class="form-control mt-3"

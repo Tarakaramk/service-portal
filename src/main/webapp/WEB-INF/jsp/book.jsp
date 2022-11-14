@@ -26,6 +26,7 @@
       <br>
       <br>
       <br>
+      <a href="/welcome"> Home</a><br>
       <a href="/historylogin"> history checker</a>
 </body>
 

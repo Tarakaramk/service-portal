@@ -3,6 +3,7 @@ package com.CarRental.serviceportal.controller;
 import com.CarRental.serviceportal.controller.bean.Car;
 import com.CarRental.serviceportal.controller.bean.Rental;
 import com.CarRental.serviceportal.controller.bean.User;
+import com.CarRental.serviceportal.service.SortingService;
 import com.CarRental.serviceportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,9 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    SortingService sortingService;
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
     public String loginPage(){
@@ -54,13 +60,13 @@ public class LoginController {
         return model1;
     }
 
-
-
     @RequestMapping(value="/book",method=RequestMethod.POST)
     public ModelAndView bookPage(String model,@RequestParam int rental,@RequestParam String start_time,@RequestParam String end_time,
                                  @RequestParam int seater,@RequestParam String car_model ){
         //model.put("rental",rental);
         ModelAndView mode = new ModelAndView();
+        /*LocalDate start_time = LocalDate.parse(start_t);
+        LocalDate end_time = LocalDate.parse(end_t);*/
 
         List<Car> use = userService.getStatus(rental,start_time,end_time,seater,car_model);
         Car c=new Car();
@@ -87,17 +93,24 @@ public class LoginController {
         return mode1;
     }
 
-    @RequestMapping(value="/oder",method=RequestMethod.GET)
-    public ModelAndView orderPage(String model){
-        ModelAndView model1 = new ModelAndView();
+    @RequestMapping(value = "/sorting", method = RequestMethod.GET)
+    public String sortPage() {
+        return "sorting";
+    }
 
-        List<Car> use = userService.getOrder();
-        Car c=new Car();
-        use.add(c);
-        model1.addObject("Service",use);
-        model1.setViewName("order");
-        return model1;
+    //sorting
+    @RequestMapping(value = "/sorting", method = RequestMethod.POST)
+    public ModelAndView sortPage(ModelAndView model, @RequestParam String sort) throws ParseException {
+
+        List<Car> modeld= sortingService.getSorting(sort);
+        model.addObject("Service", modeld);
+        model.setViewName("order");
+        return model;
     }
 
 
 }
+
+
+
+

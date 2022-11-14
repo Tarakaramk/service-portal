@@ -8,6 +8,7 @@ import com.CarRental.serviceportal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
      return  car;
     }
     @Override
-    public List<Car> getStatus(int rental,String start_time,String end_time,int seater,String car_model){
+    public List<Car> getStatus(int rental,String start_time,String end_time,int seater,String car_model) {
       //userDao.getStatus(rental);
         List<Car> car = userDao.getStatus(rental,start_time,end_time,seater,car_model);
         return  car;
@@ -36,11 +37,6 @@ public class UserServiceImpl implements UserService {
     public List<Rental> getToken(int rToken){
         List<Rental> rental = userDao.getToken(rToken);
         return rental;
-    }
-    @Override
-    public List<Car> getOrder(){
-        List<Car> car = userDao.getOrder();
-        return  car;
     }
 
 }

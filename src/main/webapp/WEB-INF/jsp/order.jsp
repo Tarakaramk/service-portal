@@ -17,11 +17,14 @@
           </tr>
           <c:forEach var="impl" items="${Service}">
               <tr style="font-size: 17">
+              <form method="post">
                   <td>${impl.carModel} </td>
                   <td>${impl.carNumber} </td>
                   <td>${impl.rentPrice} </td>
                   <td>${impl.rentalId} </td>
-
+                  <form>
               </tr>
               </c:forEach>
       </table>
+      </body>
+   </html>

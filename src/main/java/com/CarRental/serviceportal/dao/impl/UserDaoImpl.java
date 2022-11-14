@@ -17,6 +17,8 @@ import javax.sql.DataSource;
 import javax.transaction.Transactional;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +87,15 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
     //inserting booking details to rentals table as history using sql2
     @Transactional
     public List<Car> getStatus(int rental,String start_time,String end_time,int seater,String car_model){
+
+        LocalDate dateBefore = LocalDate.parse(start_time);
+        LocalDate dateAfter = LocalDate.parse(end_time);
+
+        // Approach 1
+        long daysDiff = ChronoUnit.DAYS.between(dateBefore, dateAfter);
+        int difference =(int)daysDiff;
+
+
         String sql ="update car set car_status=0 where rental_id=?";
         jdbcTemplate.update(sql,rental);
 
@@ -105,7 +116,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
                     Car cr = new Car();
                     cr.setCarModel(rs.getString("car_model"));
                     cr.setCarNumber(rs.getInt("car_number"));
-                    cr.setRentPrice(rs.getInt("rent_price"));
+                    cr.setRentPrice(difference*(rs.getInt("rent_price")));
                     cr.setRentalId(rs.getInt("rental_id"));
                     stat.add(cr);
                 }
@@ -140,26 +151,8 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         return token;
     }
 
-    @Override
-    public List<Car> getOrder(){
-        String sql = "select *from car where car_status=1 order by rent_price";
-        List<Car> lst = new ArrayList<>();
-        lst = getJdbcTemplate().query(sql, new Object[]{}, new ResultSetExtractor<List<Car>>() {
-            @Override
-            public List<Car> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                List<Car> lst = new ArrayList<>();
-                while (rs.next()) {
-                    Car cl = new Car();
-                    cl.setCarModel(rs.getString("car_model"));
-                    cl.setCarNumber(rs.getInt("car_number"));
-                    cl.setRentPrice(rs.getInt("rent_price"));
-                    cl.setRentalId(rs.getInt("rental_id"));
-                    lst.add(cl);
-                }
-                return lst;
-            }
-        });
-        //System.out.println(lst);
-        return lst;
+    public List<Car> returnList(){
+        return this.lst;
     }
+
 }

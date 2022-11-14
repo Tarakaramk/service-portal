@@ -1,5 +1,7 @@
 package com.CarRental.serviceportal.controller.bean;
 
+import java.util.Comparator;
+
 public class Car {
     int carNumber;
     String carModel;
@@ -48,5 +50,20 @@ public class Car {
         this.rentalId = rentalId;
     }
 
+    public class sortbyPrice implements Comparator<Car>
+    {
+        public int compare(Car a, Car b)
+        {
+            return a.rentPrice - b.rentPrice;
+        }
+    }
+
+    public class sortbyPriceDesc implements Comparator<Car>
+    {
+        public int compare(Car a, Car b)
+        {
+            return a.rentPrice - b.rentPrice;
+        }
+    }
 
 }
